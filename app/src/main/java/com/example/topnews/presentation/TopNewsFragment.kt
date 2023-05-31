@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.topnews.App
 import com.example.topnews.databinding.FragmentTopNewsBinding
-import com.example.topnews.presentation.viewModel.ViewModelFactory
 import com.example.topnews.presentation.viewModel.WorldViewModel
 import javax.inject.Inject
 
@@ -18,7 +18,7 @@ class TopNewsFragment : Fragment() {
     private val binding get() = _binding!!
 
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel: WorldViewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[WorldViewModel::class.java]
@@ -26,6 +26,7 @@ class TopNewsFragment : Fragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        App.instance.appComponent.inject(this)
         super.onCreate(savedInstanceState)
 
     }
@@ -44,12 +45,12 @@ class TopNewsFragment : Fragment() {
         viewModel.init()
     }
 
-
-
     companion object {
 
         @JvmStatic
         fun newInstance() =
-            TopNewsFragment()
+            TopNewsFragment().apply {
+                App.instance.appComponent.inject(this)
+            }
     }
 }

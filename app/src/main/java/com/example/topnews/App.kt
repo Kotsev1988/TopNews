@@ -11,7 +11,7 @@ class App: Application() {
         lateinit var instance: App
     }
 
-    private lateinit var appComponent: AppComponent
+     lateinit var appComponent: AppComponent
 
     override fun onCreate() {
         super.onCreate()
